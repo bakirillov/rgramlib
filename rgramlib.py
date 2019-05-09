@@ -102,11 +102,11 @@ class RGramMaker():
         dk = [(a[0],self.decompress(a[0])) for a in dk]
         return(dk)
     
-    def segment(self, string):
+    def segment(self, string, max_len=100):
         ts = string[:]
         for num,rg in self.decompressed():
             ts = ts.replace(rg, ","+num+"|rgram,")
-        tl = list(filter(lambda x: len(x)>0, ts.split(",")))
+        tl = list(filter(lambda x: len(x)>0 and len(x)<max_len, ts.split(",")))
         result = []
         for seg in tl:
             if "rgram" in seg:
