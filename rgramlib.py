@@ -6,9 +6,9 @@ import pandas as pd
 import pickle as pkl
 import os.path as op
 from tqdm import tqdm
-from collections import Counter
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
+from collections import Counter, OrderedDict
 
 
 class RGramMaker():
@@ -21,8 +21,8 @@ class RGramMaker():
         self.MN = min_num
         self.MAL = max_alph_length
         self.separator = separator
-        self.B = {}
-        self.Bfreqs = {}
+        self.B = OrderedDict()
+        self.Bfreqs = OrderedDict()
         self.i_num = 0
         
     def separate(self, string_l, flank=True):
