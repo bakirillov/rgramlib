@@ -22,8 +22,24 @@ class RGramMaker():
         self.MAL = max_alph_length
         self.separator = separator
         self.B = OrderedDict()
-        self.Bfreqs = OrderedDict()
         self.i_num = 0
+        
+    def __add__(self, other):
+        assert self.MN == other.MN
+        assert self.MAL == other.MAL
+        assert self.separator == other.separator
+        joined_alphabet = "".join(list(np.union1d(self.starting_alphabet, other.starting_alphabet)))
+        the_sum = RGramMaker(joined_alphabet, min_num=self.MN, max_alph_length=self.MAL, separator=self.separator)
+        decompressed1 = [self.separate(a[1]) for a in self.decompressed()]
+        decompressed2 = [self.separate(a[1]) for a in other.decompressed()]
+        d_union = sorted(np.union1d(decompressed1, decompressed2), key=len)
+        for i,a in enumerate(d_union):
+            the_sum.B[str(i)] = a
+        the_sum.A.extend(list(the_sum.B.keys()))
+        return(the_sum)
+    
+    def __radd__(self, other):
+        return(self)
         
     def separate(self, string_l, flank=True):
         s = self.separator.join(string_l)
