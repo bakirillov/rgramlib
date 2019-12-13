@@ -40,6 +40,27 @@ class RGramMaker():
     
     def __radd__(self, other):
         return(self)
+    
+    @staticmethod
+    def most_common_pair(sequence):
+        counter = {}
+        MCP = None
+        MCP_c = 0
+        l = len(sequence)
+        if l > 1000000:
+            print("Verbose mode for sequence of length "+str(l))
+        for a in range(l-1):
+            current = "".join(sequence[a:a+2])
+            if current not in counter:
+                counter[current] = 1
+            else:
+                counter[current] += 1
+            if counter[current] > MCP_c:
+                MCP = current
+                MCP_c = counter[current]
+            if a % 10000000 == 0:
+                print("Pair #"+str(a))
+        return(MCP, MCP_c)
         
     def separate(self, string_l, flank=True):
         s = self.separator.join(string_l)
@@ -53,12 +74,12 @@ class RGramMaker():
         if len(sep_str) == 1:
             return(string)
         else:
-            pairs = []
-            while i != len(sep_str)-1:
-                new_pair = self.separate([sep_str[i], sep_str[i+1]], False)
-                pairs.append(new_pair)
-                i += 1
-            most_common_pair, mcp_n = Counter(pairs).most_common(1)[0]
+            #pairs = []
+            #while i != len(sep_str)-1:
+            #    new_pair = self.separate([sep_str[i], sep_str[i+1]], False)
+            #    pairs.append(new_pair)
+            #    i += 1
+            most_common_pair, mcp_n = RGramMaker.most_common_pair(sep_str)#Counter(pairs).most_common(1)[0]
             if most_common_pair not in self.B.values():
                 if mcp_n >= self.MN:
                     new_letter = str(self.i_num)
@@ -82,8 +103,6 @@ class RGramMaker():
         while True:
             result_string = self.compress_iter(result_string)
             i += 1
-            if i >= 100:
-                print("Compression step #"+str(i))
             if self.MAL:
                 if len(self.A)-self.in_l >= self.MAL:
                     break
