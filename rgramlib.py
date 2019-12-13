@@ -58,7 +58,7 @@ class RGramMaker():
             if counter[current] > MCP_c:
                 MCP = current
                 MCP_c = counter[current]
-            if a % 10000000 == 0:
+            if l > 1000000 and a % 10000000 == 0:
                 print("Pair #"+str(a))
         return([a for a in MCP], MCP_c)
         
