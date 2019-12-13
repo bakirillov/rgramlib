@@ -82,6 +82,8 @@ class RGramMaker():
         while True:
             result_string = self.compress_iter(result_string)
             i += 1
+            if i >= 100:
+                print("Compression step #"+str(i))
             if self.MAL:
                 if len(self.A)-self.in_l >= self.MAL:
                     break
