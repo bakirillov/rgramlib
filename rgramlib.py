@@ -60,7 +60,7 @@ class RGramMaker():
                 MCP_c = counter[current]
             if a % 10000000 == 0:
                 print("Pair #"+str(a))
-        return(MCP, MCP_c)
+        return([a for a in MCP], MCP_c)
         
     def separate(self, string_l, flank=True):
         s = self.separator.join(string_l)
