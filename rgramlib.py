@@ -80,7 +80,7 @@ class RGramMaker():
             #    pairs.append(new_pair)
             #    i += 1
             most_common_pair, mcp_n = RGramMaker.most_common_pair(sep_str)#Counter(pairs).most_common(1)[0]
-            most_common_pair = self.separate(most_common_pair)
+            most_common_pair = self.separate(most_common_pair, False)
             if most_common_pair not in self.B.values():
                 if mcp_n >= self.MN:
                     new_letter = str(self.i_num)
