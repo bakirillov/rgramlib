@@ -74,11 +74,6 @@ class RGramMaker():
         if len(sep_str) == 1:
             return(string)
         else:
-            #pairs = []
-            #while i != len(sep_str)-1:
-            #    new_pair = self.separate([sep_str[i], sep_str[i+1]], False)
-            #    pairs.append(new_pair)
-            #    i += 1
             most_common_pair, mcp_n = RGramMaker.most_common_pair(sep_str)#Counter(pairs).most_common(1)[0]
             most_common_pair = self.separate(most_common_pair, False)
             if most_common_pair not in self.B.values():
@@ -139,6 +134,14 @@ class RGramMaker():
         dk = list(reversed(sorted(self.B.items(), key=lambda x: len(self.decompress(x[0])))))
         dk = [(a[0],self.decompress(a[0])) for a in dk]
         return(dk)
+    
+    def __len__(self):
+        return(len(self.decompressed()))
+    
+    def __eq__(self, other):
+        a = set([a for a in self.decompressed()])
+        b = set([a for a in other.decompressed()])
+        return(len(a.difference(b)) == 0)
     
     def segment(self, string, max_len=100):
         ts = string[:]
